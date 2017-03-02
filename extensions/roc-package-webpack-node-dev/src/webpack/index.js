@@ -29,6 +29,13 @@ export default ({ previousValue: webpackConfig }) => (target) => {
                     // Webpack loaders that might be a part of the path, manage this
                     const resourcePath = request.split('!').pop();
 
+                    // Additional externals as added in buildSettings.externals
+                    for(let i = 0; i < buildSettings.externals.length; i++){
+                        let re = new RegExp(buildSettings.externals[i],"g");
+                        if(re.test(resourcePath)){
+                            return callback();
+                        }
+                    }
                     // If a roc module include it if app is the next on the path
                     // Will include for example "roc-package-web-app/app" & "roc-package-web-app-react/app/server"
                     // but not "roc-package-web-app/lib" & "roc-package-web-app"

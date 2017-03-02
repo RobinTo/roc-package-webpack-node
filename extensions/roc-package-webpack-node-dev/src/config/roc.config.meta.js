@@ -2,6 +2,7 @@ import {
     isArray,
     isPath,
     oneOf,
+    isString,
     required,
 } from 'roc/validators';
 
@@ -17,6 +18,12 @@ export default {
                     override: 'roc-package-webpack-dev',
                     validator: required(isArray(/^node$/i)),
                 },
+            },
+        },
+        build: {
+            externals: {
+                description: 'Regex expression to match for adding additional externals',
+                validator: isArray(isString),
             },
         },
     },
